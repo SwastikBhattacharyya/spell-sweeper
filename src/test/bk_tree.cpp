@@ -92,8 +92,29 @@ TEST(bk_tree_test, remove) {
     EXPECT_EQ(tree.head->next.size(), 2);
     EXPECT_EQ(tree.head->next[1]->next.size(), 0);
     EXPECT_EQ(tree.head->next[2]->next.size(), 0);
+    EXPECT_EQ(tree.head->next[1]->word, "thin");
+    EXPECT_EQ(tree.head->next[2]->word, "thud");
 
-    ASSERT_EQ(tree.remove("this"), -1);
+    ASSERT_EQ(tree.add("thus"), 0);
+    ASSERT_EQ(tree.add("these"), 0);
+
+    EXPECT_EQ(tree.head->next[1]->next[2]->word, "thus");
+    EXPECT_EQ(tree.head->next[2]->next[3]->word, "these");
+
+    ASSERT_EQ(tree.remove("this"), 0);
+    EXPECT_NE(tree.head->word, "this");
+
+    if (tree.head->word == "thud") {
+        EXPECT_EQ(tree.head->next.size(), 2);
+        EXPECT_EQ(tree.head->next[2]->next.size(), 1);
+        EXPECT_EQ(tree.head->next[2]->next[2]->next.size(), 0);
+        EXPECT_EQ(tree.head->next[3]->next.size(), 0);
+    } else if (tree.head->word == "thin") {
+        EXPECT_EQ(tree.head->next.size(), 1);
+        EXPECT_EQ(tree.head->next[2]->next.size(), 1);
+        EXPECT_EQ(tree.head->next[2]->next[1]->next.size(), 1);
+        EXPECT_EQ(tree.head->next[2]->next[1]->next[3]->next.size(), 0);
+    }
 }
 
 TEST(bk_tree_test, get_similar_words) {

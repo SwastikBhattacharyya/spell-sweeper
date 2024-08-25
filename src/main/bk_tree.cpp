@@ -67,8 +67,27 @@ int bk_tree::remove(const std::string_view& word) {
     if (this->head == nullptr)
         return -1;
 
-    if (this->head->word == word)
-        return -1;
+    if (this->head->word == word) {
+        std::shared_ptr<bk_tree::node> removed_head = this->head;
+        this->head = nullptr;
+        if (removed_head->next.empty())
+            return 0;
+
+        int first = removed_head->next.begin()->first;
+        std::shared_ptr<bk_tree::node> first_node =
+            removed_head->next.begin()->second;
+
+        this->head = first_node;
+        for (const std::pair<const int, std::shared_ptr<bk_tree::node>>& node :
+             removed_head->next) {
+            if (node.first == first)
+                continue;
+
+            this->add_node_from(node.second, this->head);
+        }
+
+        return 0;
+    }
 
     std::shared_ptr<bk_tree::node> current_node = this->head;
     std::shared_ptr<bk_tree::node> parent_node;
