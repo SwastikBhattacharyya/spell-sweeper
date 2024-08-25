@@ -3,7 +3,22 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 ---
-## [0.1.1](https://github.com/SwastikBhattacharyya/spell-sweeper/compare/v0.1.0..0.1.1) - 2024-08-25
+## [0.1.2](https://github.com/SwastikBhattacharyya/spell-sweeper/compare/v0.1.1..0.1.2) - 2024-08-25
+
+### Bug Fixes
+
+- **(bk-tree)** handle removal of head node in bk tree - ([a254578](https://github.com/SwastikBhattacharyya/spell-sweeper/commit/a25457889a9ba2e5a46cd36c121e619626bddd85)) - Swastik Bhattacharyya
+
+### Features
+
+- **(bk-tree)** add bk tree node class - ([677bd91](https://github.com/SwastikBhattacharyya/spell-sweeper/commit/677bd917828cbbdf860b38b8caa68b31de42a630)) - Swastik Bhattacharyya
+- **(bk-tree)** add function to add node in bk tree - ([003f93f](https://github.com/SwastikBhattacharyya/spell-sweeper/commit/003f93f047108ff8178879f37e27b4a47bcd9f93)) - Swastik Bhattacharyya
+- **(bk-tree)** add function to search node in bk tree - ([efb9f43](https://github.com/SwastikBhattacharyya/spell-sweeper/commit/efb9f4314921e0509128f1a8e669dd61bcec3753)) - Swastik Bhattacharyya
+- **(bk-tree)** add function to get similar words from bk tree - ([aa3acaf](https://github.com/SwastikBhattacharyya/spell-sweeper/commit/aa3acaf6b81153c0225daf7fc48735a570ef1d02)) - Swastik Bhattacharyya
+- **(bk-tree)** add function to remove a word except root word from tree - ([61717d4](https://github.com/SwastikBhattacharyya/spell-sweeper/commit/61717d47c4b696d898bf5b0f2d7c76d54fd4e8a5)) - Swastik Bhattacharyya
+
+---
+## [0.1.1](https://github.com/SwastikBhattacharyya/spell-sweeper/compare/v0.1.0..v0.1.1) - 2024-08-25
 
 ### Features
 
