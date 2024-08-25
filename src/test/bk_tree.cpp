@@ -43,3 +43,22 @@ TEST(bk_tree_test, add) {
     EXPECT_EQ(tree.head->next[1]->next[2]->word, "thin");
     EXPECT_EQ(tree.head->next[2]->next[3]->word, "thud");
 }
+
+TEST(bk_tree_test, search) {
+    spell_sweeper::bk_tree tree = spell_sweeper::bk_tree();
+    ASSERT_EQ(tree.add("this"), 0);
+    ASSERT_EQ(tree.add("thus"), 0);
+    ASSERT_EQ(tree.add("these"), 0);
+    ASSERT_EQ(tree.add("thin"), 0);
+    ASSERT_EQ(tree.add("thud"), 0);
+
+    EXPECT_EQ(tree.search("this"), 0);
+    EXPECT_EQ(tree.search("thus"), 0);
+    EXPECT_EQ(tree.search("these"), 0);
+    EXPECT_EQ(tree.search("thin"), 0);
+    EXPECT_EQ(tree.search("thud"), 0);
+
+    EXPECT_EQ(tree.search("should"), -1);
+    EXPECT_EQ(tree.search("neck"), -1);
+    EXPECT_EQ(tree.search("heart"), -1);
+}
