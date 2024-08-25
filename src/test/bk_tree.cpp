@@ -1,4 +1,5 @@
 #include "include/bk_tree.h"
+#include <algorithm>
 #include <gtest/gtest.h>
 #include <memory>
 
@@ -61,4 +62,19 @@ TEST(bk_tree_test, search) {
     EXPECT_EQ(tree.search("should"), -1);
     EXPECT_EQ(tree.search("neck"), -1);
     EXPECT_EQ(tree.search("heart"), -1);
+}
+
+TEST(bk_tree_test, get_similar_words) {
+    spell_sweeper::bk_tree tree = spell_sweeper::bk_tree();
+    ASSERT_EQ(tree.add("this"), 0);
+    ASSERT_EQ(tree.add("thus"), 0);
+    ASSERT_EQ(tree.add("these"), 0);
+    ASSERT_EQ(tree.add("thin"), 0);
+    ASSERT_EQ(tree.add("thud"), 0);
+
+    std::vector<std::string_view> words = tree.get_similar_words("this", 1);
+    EXPECT_EQ(words.size(), 2);
+    EXPECT_NE(std::find(words.begin(), words.end(), "thus"), words.end());
+    EXPECT_NE(std::find(words.begin(), words.end(), "thin"), words.end());
+    EXPECT_EQ(std::find(words.begin(), words.end(), "these"), words.end());
 }
