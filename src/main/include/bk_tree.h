@@ -15,6 +15,11 @@ class bk_tree {
       public:
         node(const std::string_view& word);
     };
+    std::shared_ptr<node> head;
+
+  public:
+    int add(const std::string_view& word);
+    int search(const std::string_view& word);
 };
 } // namespace spell_sweeper
 
