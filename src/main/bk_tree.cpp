@@ -2,6 +2,7 @@
 #include "include/edit_distance.h"
 #include <cstdint>
 #include <memory>
+#include <string_view>
 
 namespace spell_sweeper {
 bk_tree::node::node(const std::string_view& word) { this->word = word; }
@@ -28,5 +29,23 @@ int bk_tree::add(const std::string_view& word) {
     }
 
     return -1;
+}
+
+int bk_tree::search(const std::string_view& word) {
+    if (this->head == nullptr)
+        return -1;
+
+    std::shared_ptr<bk_tree::node> current_node = this->head;
+
+    while (true) {
+        std::uint8_t distance = edit_distance::get_damerau_levenshtein(
+            word, current_node->word, 255);
+        if (distance == 0)
+            return 0;
+        else if (current_node->next.find(distance) != current_node->next.end())
+            current_node = current_node->next[distance];
+        else
+            return -1;
+    }
 }
 } // namespace spell_sweeper
