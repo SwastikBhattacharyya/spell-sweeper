@@ -64,8 +64,41 @@ TEST(bk_tree_test, search) {
     EXPECT_EQ(tree.search("heart"), -1);
 }
 
+TEST(bk_tree_test, remove) {
+    spell_sweeper::bk_tree tree = spell_sweeper::bk_tree();
+    ASSERT_EQ(tree.add("this"), 0);
+    ASSERT_EQ(tree.add("thus"), 0);
+    ASSERT_EQ(tree.add("these"), 0);
+    ASSERT_EQ(tree.add("thin"), 0);
+    ASSERT_EQ(tree.add("thud"), 0);
+
+    ASSERT_EQ(tree.remove("thus"), 0);
+
+    EXPECT_EQ(tree.search("this"), 0);
+    EXPECT_EQ(tree.search("these"), 0);
+    EXPECT_EQ(tree.search("thin"), 0);
+    EXPECT_EQ(tree.search("thud"), 0);
+    EXPECT_EQ(tree.search("thus"), -1);
+    EXPECT_EQ(tree.head->next.size(), 2);
+    EXPECT_EQ(tree.head->next[1]->next.size(), 0);
+    EXPECT_EQ(tree.head->next[2]->next.size(), 1);
+    EXPECT_EQ(tree.head->next[2]->next[3]->next.size(), 0);
+
+    ASSERT_EQ(tree.remove("these"), 0);
+    EXPECT_EQ(tree.search("this"), 0);
+    EXPECT_EQ(tree.search("these"), -1);
+    EXPECT_EQ(tree.search("thin"), 0);
+    EXPECT_EQ(tree.search("thud"), 0);
+    EXPECT_EQ(tree.head->next.size(), 2);
+    EXPECT_EQ(tree.head->next[1]->next.size(), 0);
+    EXPECT_EQ(tree.head->next[2]->next.size(), 0);
+
+    ASSERT_EQ(tree.remove("this"), -1);
+}
+
 TEST(bk_tree_test, get_similar_words) {
     spell_sweeper::bk_tree tree = spell_sweeper::bk_tree();
+
     ASSERT_EQ(tree.add("this"), 0);
     ASSERT_EQ(tree.add("thus"), 0);
     ASSERT_EQ(tree.add("these"), 0);
