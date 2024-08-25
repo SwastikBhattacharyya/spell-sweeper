@@ -28,3 +28,18 @@ TEST(bk_tree_test, node_link) {
     ASSERT_EQ(first.next[4]->word, "Hm");
     ASSERT_EQ(first.next[4].use_count(), 2);
 }
+
+TEST(bk_tree_test, add) {
+    spell_sweeper::bk_tree tree = spell_sweeper::bk_tree();
+    ASSERT_EQ(tree.add("this"), 0);
+    ASSERT_EQ(tree.add("thus"), 0);
+    ASSERT_EQ(tree.add("these"), 0);
+    ASSERT_EQ(tree.add("thin"), 0);
+    ASSERT_EQ(tree.add("thud"), 0);
+
+    EXPECT_EQ(tree.head->word, "this");
+    EXPECT_EQ(tree.head->next[1]->word, "thus");
+    EXPECT_EQ(tree.head->next[2]->word, "these");
+    EXPECT_EQ(tree.head->next[1]->next[2]->word, "thin");
+    EXPECT_EQ(tree.head->next[2]->next[3]->word, "thud");
+}
