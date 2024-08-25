@@ -1,8 +1,7 @@
 #include "include/bk_tree.h"
 #include "include/edit_distance.h"
-#include <cstdint>
-#include <memory>
-#include <string_view>
+#include <algorithm>
+#include <stack>
 
 namespace spell_sweeper {
 bk_tree::node::node(const std::string_view& word) { this->word = word; }
@@ -47,5 +46,32 @@ int bk_tree::search(const std::string_view& word) {
         else
             return -1;
     }
+}
+
+std::vector<std::string_view>
+bk_tree::get_similar_words(const std::string_view& word,
+                           std::uint8_t tolerance) const {
+    std::vector<std::string_view> words;
+    std::stack<std::shared_ptr<bk_tree::node>> stack;
+    stack.push(this->head);
+
+    while (!stack.empty()) {
+        std::shared_ptr<bk_tree::node> current = stack.top();
+        stack.pop();
+        std::uint8_t distance =
+            edit_distance::get_damerau_levenshtein(word, current->word, 255);
+
+        if (distance <= tolerance && word != current->word)
+            words.push_back(current->word);
+
+        std::uint8_t tolerance_start = std::max(1, distance - tolerance);
+        std::uint8_t tolerance_end = distance + tolerance;
+
+        for (std::uint8_t i = tolerance_start; i <= tolerance_end; i++)
+            if (current->next.find(i) != current->next.end())
+                stack.push(current->next[i]);
+    }
+
+    return words;
 }
 } // namespace spell_sweeper
