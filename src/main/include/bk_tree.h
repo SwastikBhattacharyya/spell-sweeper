@@ -20,6 +20,10 @@ class bk_tree {
     };
     std::shared_ptr<node> head;
 
+  private:
+    int add_node_from(std::shared_ptr<bk_tree::node> node,
+                      std::shared_ptr<bk_tree::node> current);
+
   public:
     int add(const std::string_view& word);
     int search(const std::string_view& word);

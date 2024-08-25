@@ -6,6 +6,21 @@
 namespace spell_sweeper {
 bk_tree::node::node(const std::string_view& word) { this->word = word; }
 
+int bk_tree::add_node_from(std::shared_ptr<bk_tree::node> node,
+                           std::shared_ptr<bk_tree::node> current) {
+    while (true) {
+        std::uint8_t distance = edit_distance::get_damerau_levenshtein(
+            node->word, current->word, 255);
+        if (current->next.find(distance) == current->next.end()) {
+            current->next[distance] = node;
+            break;
+        } else
+            current = current->next[distance];
+    }
+
+    return 0;
+}
+
 int bk_tree::add(const std::string_view& word) {
     if (this->head == nullptr) {
         this->head = std::make_shared<bk_tree::node>(bk_tree::node(word));
@@ -80,18 +95,8 @@ int bk_tree::remove(const std::string_view& word) {
          current_node->next)
         children.push_back(node.second);
 
-    for (const std::shared_ptr<bk_tree::node>& node : children) {
-        current_node = parent_node;
-        while (true) {
-            std::uint8_t distance = edit_distance::get_damerau_levenshtein(
-                node->word, current_node->word, 255);
-            if (current_node->next.find(distance) == current_node->next.end()) {
-                current_node->next[distance] = node;
-                break;
-            } else
-                current_node = current_node->next[distance];
-        }
-    }
+    for (const std::shared_ptr<bk_tree::node>& node : children)
+        this->add_node_from(node, parent_node);
 
     return 0;
 }
