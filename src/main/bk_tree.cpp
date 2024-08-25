@@ -48,6 +48,54 @@ int bk_tree::search(const std::string_view& word) {
     }
 }
 
+int bk_tree::remove(const std::string_view& word) {
+    if (this->head == nullptr)
+        return -1;
+
+    if (this->head->word == word)
+        return -1;
+
+    std::shared_ptr<bk_tree::node> current_node = this->head;
+    std::shared_ptr<bk_tree::node> parent_node;
+    std::uint8_t index;
+
+    while (true) {
+        std::uint8_t distance = edit_distance::get_damerau_levenshtein(
+            word, current_node->word, 255);
+        if (distance == 0)
+            break;
+        else if (current_node->next.find(distance) !=
+                 current_node->next.end()) {
+            parent_node = current_node;
+            index = distance;
+            current_node = current_node->next[distance];
+        } else
+            return -1;
+    }
+
+    parent_node->next.erase(index);
+
+    std::vector<std::shared_ptr<bk_tree::node>> children;
+    for (const std::pair<const int, std::shared_ptr<bk_tree::node>>& node :
+         current_node->next)
+        children.push_back(node.second);
+
+    for (const std::shared_ptr<bk_tree::node>& node : children) {
+        current_node = parent_node;
+        while (true) {
+            std::uint8_t distance = edit_distance::get_damerau_levenshtein(
+                node->word, current_node->word, 255);
+            if (current_node->next.find(distance) == current_node->next.end()) {
+                current_node->next[distance] = node;
+                break;
+            } else
+                current_node = current_node->next[distance];
+        }
+    }
+
+    return 0;
+}
+
 std::vector<std::string_view>
 bk_tree::get_similar_words(const std::string_view& word,
                            std::uint8_t tolerance) const {

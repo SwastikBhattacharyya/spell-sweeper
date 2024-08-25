@@ -23,6 +23,7 @@ class bk_tree {
   public:
     int add(const std::string_view& word);
     int search(const std::string_view& word);
+    int remove(const std::string_view& word);
     std::vector<std::string_view>
     get_similar_words(const std::string_view& word,
                       std::uint8_t tolerance) const;
