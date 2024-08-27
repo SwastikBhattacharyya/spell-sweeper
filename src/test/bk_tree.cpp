@@ -1,5 +1,6 @@
 #include "include/bk_tree.h"
 #include <algorithm>
+#include <fstream>
 #include <gtest/gtest.h>
 #include <memory>
 
@@ -13,7 +14,8 @@ TEST(bk_tree_test, node_link) {
     spell_sweeper::bk_tree::node first = spell_sweeper::bk_tree::node("Hello");
     spell_sweeper::bk_tree::node second = spell_sweeper::bk_tree::node("Hi");
 
-    first.next[4] = std::make_shared<spell_sweeper::bk_tree::node>(second);
+    first.next.insert(
+        {4, std::make_shared<spell_sweeper::bk_tree::node>(second)});
 
     ASSERT_EQ(first.word, "Hello");
     ASSERT_EQ(second.word, "Hi");
@@ -24,10 +26,38 @@ TEST(bk_tree_test, node_link) {
     ASSERT_EQ(first.next[4]->next.size(), second.next.size());
 
     std::shared_ptr<spell_sweeper::bk_tree::node> ptr = first.next[4];
-    ptr->word = "Hm";
 
-    ASSERT_EQ(first.next[4]->word, "Hm");
     ASSERT_EQ(first.next[4].use_count(), 2);
+}
+
+TEST(bk_tree_test, file) {
+    std::ifstream file("resources/words.txt");
+    std::vector<std::string> words;
+    std::string line;
+    while (!file.eof()) {
+        std::getline(file, line);
+        std::transform(line.begin(), line.end(), line.begin(),
+                       [](unsigned char c) { return std::tolower(c); });
+        words.push_back(line);
+    }
+
+    spell_sweeper::bk_tree tree = spell_sweeper::bk_tree(words);
+    file.close();
+
+    for (const std::string& word : words)
+        EXPECT_EQ(tree.search(word), 0);
+
+    ASSERT_EQ(tree.remove("this"), 0);
+    ASSERT_EQ(tree.remove("there"), 0);
+    ASSERT_EQ(tree.remove("where"), 0);
+    for (const std::string& word : words) {
+        if (word != "this" && word != "there" && word != "where")
+            EXPECT_EQ(tree.search(word), 0);
+        else
+            EXPECT_EQ(tree.search(word), -1);
+    }
+
+    EXPECT_EQ(tree.remove("this-is-not-a-word"), -1);
 }
 
 TEST(bk_tree_test, add) {
