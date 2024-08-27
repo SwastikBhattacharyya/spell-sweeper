@@ -3,7 +3,18 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 ---
-## [0.1.2](https://github.com/SwastikBhattacharyya/spell-sweeper/compare/v0.1.1..0.1.2) - 2024-08-25
+## [0.2.0](https://github.com/SwastikBhattacharyya/spell-sweeper/compare/v0.1.2..0.2.0) - 2024-08-27
+
+### Features
+
+- **(bk-tree)** add constructor in bk tree from vector of strings - ([a7978ed](https://github.com/SwastikBhattacharyya/spell-sweeper/commit/a7978edbd96e117952c166ad540ce9ab2781cde8)) - Swastik Bhattacharyya
+
+### Performance
+
+- **(bk-tree)** refactor bk_tree class to use map for storing nodes - ([445cf03](https://github.com/SwastikBhattacharyya/spell-sweeper/commit/445cf032052ee07e8e0331588b6a3a7332889c41)) - Swastik Bhattacharyya
+
+---
+## [0.1.2](https://github.com/SwastikBhattacharyya/spell-sweeper/compare/v0.1.1..v0.1.2) - 2024-08-25
 
 ### Bug Fixes
 
