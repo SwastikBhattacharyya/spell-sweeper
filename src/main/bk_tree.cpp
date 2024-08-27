@@ -2,18 +2,17 @@
 #include "include/edit_distance.h"
 #include <algorithm>
 #include <stack>
-#include <string>
 
 namespace spell_sweeper {
-bk_tree::node::node(const std::string_view& word) { this->word = word; }
+bk_tree::node::node(const std::string_view& word) : word(word) {}
 
-int bk_tree::add_node_from(std::shared_ptr<bk_tree::node> node,
-                           std::shared_ptr<bk_tree::node> current) {
+int8_t bk_tree::add_node_from(std::shared_ptr<bk_tree::node> node,
+                              std::shared_ptr<bk_tree::node> current) {
     while (true) {
         std::uint8_t distance = edit_distance::get_damerau_levenshtein(
             node->word, current->word, 255);
         if (current->next.find(distance) == current->next.end()) {
-            current->next[distance] = node;
+            current->next.insert({distance, node});
             break;
         } else
             current = current->next[distance];
@@ -27,7 +26,7 @@ bk_tree::bk_tree(std::vector<std::string> words) {
         this->add(word);
 }
 
-int bk_tree::add(const std::string_view& word) {
+int8_t bk_tree::add(const std::string_view& word) {
     if (this->head == nullptr) {
         this->head = std::make_shared<bk_tree::node>(bk_tree::node(word));
         return 0;
@@ -41,8 +40,9 @@ int bk_tree::add(const std::string_view& word) {
         std::uint8_t distance = edit_distance::get_damerau_levenshtein(
             current_node->word, word, 255);
         if (current_node->next.find(distance) == current_node->next.end()) {
-            current_node->next[distance] =
-                std::make_shared<bk_tree::node>(bk_tree::node(word));
+            current_node->next.insert(
+                {distance,
+                 std::make_shared<bk_tree::node>(bk_tree::node(word))});
             return 0;
         } else
             current_node = current_node->next[distance];
@@ -51,7 +51,7 @@ int bk_tree::add(const std::string_view& word) {
     return -1;
 }
 
-int bk_tree::search(const std::string_view& word) {
+int8_t bk_tree::search(const std::string_view& word) {
     if (this->head == nullptr)
         return -1;
 
@@ -69,7 +69,7 @@ int bk_tree::search(const std::string_view& word) {
     }
 }
 
-int bk_tree::remove(const std::string_view& word) {
+int8_t bk_tree::remove(const std::string_view& word) {
     if (this->head == nullptr)
         return -1;
 
@@ -84,8 +84,8 @@ int bk_tree::remove(const std::string_view& word) {
             removed_head->next.begin()->second;
 
         this->head = first_node;
-        for (const std::pair<const int, std::shared_ptr<bk_tree::node>>& node :
-             removed_head->next) {
+        for (const std::pair<const int, const std::shared_ptr<bk_tree::node>>
+                 node : removed_head->next) {
             if (node.first == first)
                 continue;
 
@@ -97,7 +97,7 @@ int bk_tree::remove(const std::string_view& word) {
 
     std::shared_ptr<bk_tree::node> current_node = this->head;
     std::shared_ptr<bk_tree::node> parent_node;
-    std::uint8_t index;
+    std::uint8_t index = 0;
 
     while (true) {
         std::uint8_t distance = edit_distance::get_damerau_levenshtein(
@@ -116,7 +116,7 @@ int bk_tree::remove(const std::string_view& word) {
     parent_node->next.erase(index);
 
     std::vector<std::shared_ptr<bk_tree::node>> children;
-    for (const std::pair<const int, std::shared_ptr<bk_tree::node>>& node :
+    for (const std::pair<const int, const std::shared_ptr<bk_tree::node>> node :
          current_node->next)
         children.push_back(node.second);
 
