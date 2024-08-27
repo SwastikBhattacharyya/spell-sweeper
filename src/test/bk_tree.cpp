@@ -30,6 +30,24 @@ TEST(bk_tree_test, node_link) {
     ASSERT_EQ(first.next[4].use_count(), 2);
 }
 
+TEST(bk_tree_test, file) {
+    std::ifstream file("resources/words.txt");
+    std::vector<std::string> words;
+    std::string line;
+    while (!file.eof()) {
+        std::getline(file, line);
+        std::transform(line.begin(), line.end(), line.begin(),
+                       [](unsigned char c) { return std::tolower(c); });
+        words.push_back(line);
+    }
+
+    spell_sweeper::bk_tree tree = spell_sweeper::bk_tree(words);
+    file.close();
+
+    for (const std::string& word : words)
+        EXPECT_EQ(tree.search(word), 0);
+}
+
 TEST(bk_tree_test, add) {
     spell_sweeper::bk_tree tree = spell_sweeper::bk_tree();
     ASSERT_EQ(tree.add("this"), 0);
