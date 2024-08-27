@@ -3,7 +3,7 @@
 
 #include <cstdint>
 #include <memory>
-#include <string_view>
+#include <string>
 #include <unordered_map>
 #include <vector>
 
@@ -12,7 +12,7 @@ class bk_tree {
   public:
     class node {
       public:
-        std::string_view word;
+        std::string word;
         std::unordered_map<int, std::shared_ptr<node>> next;
 
       public:
@@ -25,6 +25,8 @@ class bk_tree {
                       std::shared_ptr<bk_tree::node> current);
 
   public:
+    bk_tree() = default;
+    bk_tree(std::vector<std::string> words);
     int add(const std::string_view& word);
     int search(const std::string_view& word);
     int remove(const std::string_view& word);

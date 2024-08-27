@@ -2,6 +2,7 @@
 #include "include/edit_distance.h"
 #include <algorithm>
 #include <stack>
+#include <string>
 
 namespace spell_sweeper {
 bk_tree::node::node(const std::string_view& word) { this->word = word; }
@@ -19,6 +20,11 @@ int bk_tree::add_node_from(std::shared_ptr<bk_tree::node> node,
     }
 
     return 0;
+}
+
+bk_tree::bk_tree(std::vector<std::string> words) {
+    for (const std::string& word : words)
+        this->add(word);
 }
 
 int bk_tree::add(const std::string_view& word) {
