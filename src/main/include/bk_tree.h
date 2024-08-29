@@ -1,6 +1,9 @@
 #ifndef SPELL_SWEEPER_INCLUDE_BK_TREE_H
 #define SPELL_SWEEPER_INCLUDE_BK_TREE_H
 
+#include <boost/archive/text_oarchive.hpp>
+#include <boost/serialization/map.hpp>
+#include <boost/serialization/shared_ptr.hpp>
 #include <cstdint>
 #include <map>
 #include <memory>
@@ -13,9 +16,19 @@ class bk_tree {
     class node {
       public:
         const std::string word;
-        std::map<int8_t, const std::shared_ptr<node>> next;
+        std::map<int8_t, std::shared_ptr<node>> next;
+
+      private:
+        friend class boost::serialization::access;
+
+        template <typename Archive>
+        void serialize(Archive& archive, const unsigned int version) {
+            archive& const_cast<std::string&>(this->word);
+            archive& this->next;
+        }
 
       public:
+        node() = default;
         node(const std::string_view& word);
     };
     std::shared_ptr<node> head;
@@ -23,6 +36,14 @@ class bk_tree {
   private:
     int8_t add_node_from(std::shared_ptr<bk_tree::node> node,
                          std::shared_ptr<bk_tree::node> current);
+
+  private:
+    friend class boost::serialization::access;
+
+    template <typename Archive>
+    void serialize(Archive& archive, const unsigned int version) {
+        archive& this->head;
+    }
 
   public:
     bk_tree() = default;
