@@ -1,5 +1,7 @@
 #include "include/bk_tree.h"
 #include <algorithm>
+#include <boost/archive/binary_iarchive.hpp>
+#include <boost/archive/binary_oarchive.hpp>
 #include <fstream>
 #include <gtest/gtest.h>
 
@@ -160,4 +162,37 @@ TEST(bk_tree_test, get_similar_words) {
     EXPECT_NE(std::find(words.begin(), words.end(), "thus"), words.end());
     EXPECT_NE(std::find(words.begin(), words.end(), "thin"), words.end());
     EXPECT_EQ(std::find(words.begin(), words.end(), "these"), words.end());
+}
+
+TEST(bk_tree_test, serialization) {
+    std::ifstream file("resources/words.txt");
+    std::vector<std::string> words;
+    std::string line;
+    while (!file.eof()) {
+        std::getline(file, line);
+        std::transform(line.begin(), line.end(), line.begin(),
+                       [](unsigned char c) { return std::tolower(c); });
+        words.push_back(line);
+    }
+
+    spell_sweeper::bk_tree tree = spell_sweeper::bk_tree(words);
+    file.close();
+
+    for (const std::string& word : words)
+        EXPECT_EQ(tree.search(word), 0);
+
+    std::ofstream serialization_file("resources/bk_tree.bin");
+    boost::archive::binary_oarchive oa{serialization_file};
+    EXPECT_NO_THROW(oa << tree;);
+    serialization_file.close();
+
+    spell_sweeper::bk_tree new_tree;
+
+    std::ifstream deserialization_file("resources/bk_tree.bin");
+    boost::archive::binary_iarchive ia{deserialization_file};
+    EXPECT_NO_THROW(ia >> new_tree;);
+    deserialization_file.close();
+
+    for (const std::string& word : words)
+        EXPECT_EQ(new_tree.search(word), 0);
 }

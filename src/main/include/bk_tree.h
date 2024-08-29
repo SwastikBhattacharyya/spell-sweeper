@@ -4,7 +4,6 @@
 #include <boost/archive/text_oarchive.hpp>
 #include <boost/serialization/map.hpp>
 #include <boost/serialization/shared_ptr.hpp>
-#include <boost/serialization/string.hpp>
 #include <cstdint>
 #include <map>
 #include <memory>
@@ -16,7 +15,7 @@ class bk_tree {
   public:
     class node {
       public:
-        std::string word;
+        const std::string word;
         std::map<int8_t, std::shared_ptr<node>> next;
 
       private:
@@ -24,7 +23,7 @@ class bk_tree {
 
         template <typename Archive>
         void serialize(Archive& archive, const unsigned int version) {
-            archive& this->word;
+            archive& const_cast<std::string&>(this->word);
             archive& this->next;
         }
 

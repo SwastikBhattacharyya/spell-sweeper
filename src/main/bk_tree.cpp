@@ -79,12 +79,12 @@ int8_t bk_tree::remove(const std::string_view& word) {
         if (removed_head->next.empty())
             return 0;
 
-        int first = removed_head->next.begin()->first;
+        int8_t first = removed_head->next.begin()->first;
         std::shared_ptr<bk_tree::node> first_node =
             removed_head->next.begin()->second;
 
         this->head = first_node;
-        for (const std::pair<const int, const std::shared_ptr<bk_tree::node>>
+        for (const std::pair<const int8_t, const std::shared_ptr<bk_tree::node>>
                  node : removed_head->next) {
             if (node.first == first)
                 continue;
@@ -116,8 +116,8 @@ int8_t bk_tree::remove(const std::string_view& word) {
     parent_node->next.erase(index);
 
     std::vector<std::shared_ptr<bk_tree::node>> children;
-    for (const std::pair<const int, const std::shared_ptr<bk_tree::node>> node :
-         current_node->next)
+    for (const std::pair<const int8_t, const std::shared_ptr<bk_tree::node>>
+             node : current_node->next)
         children.push_back(node.second);
 
     for (const std::shared_ptr<bk_tree::node>& node : children)
