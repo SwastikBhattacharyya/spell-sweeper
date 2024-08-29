@@ -24,3 +24,13 @@ if(GTEST_FOUND)
         ${GTEST_INCLUDE_DIRS}
     )
 endif()
+
+set(Boost_USE_STATIC_LIBS ON)
+set(Boost_USE_MULTITHREADED ON)
+set(Boost_USE_STATIC_RUNTIME OFF)
+find_package(Boost COMPONENTS serialization)
+
+if (Boost_FOUND)
+    include_directories(${Boost_INCLUDE_DIRS})
+    target_link_libraries(spell_sweeper ${Boost_LIBRARIES})
+endif()

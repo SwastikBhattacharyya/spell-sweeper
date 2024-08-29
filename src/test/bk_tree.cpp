@@ -2,7 +2,6 @@
 #include <algorithm>
 #include <fstream>
 #include <gtest/gtest.h>
-#include <memory>
 
 TEST(bk_tree_test, node_create) {
     spell_sweeper::bk_tree::node node = spell_sweeper::bk_tree::node("Hello");
