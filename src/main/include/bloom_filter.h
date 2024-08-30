@@ -2,6 +2,8 @@
 #ifndef SPELL_SWEEPER_INCLUDE_BLOOM_FILTER_H
 #define SPELL_SWEEPER_INCLUDE_BLOOM_FILTER_H
 
+#include <boost/serialization/access.hpp>
+#include <boost/serialization/vector.hpp>
 #include <cstddef>
 #include <cstdint>
 #include <string_view>
@@ -14,6 +16,17 @@ class bloom_filter {
     size_t size;
     uint32_t hash_count;
     std::vector<uint8_t> bitarray;
+
+  private:
+    friend class boost::serialization::access;
+
+    template <typename Archive>
+    void serialize(Archive& archive, const unsigned int version) {
+        archive & fp_prob;
+        archive & size;
+        archive & hash_count;
+        archive & bitarray;
+    }
 
   public:
     bloom_filter() = default;
