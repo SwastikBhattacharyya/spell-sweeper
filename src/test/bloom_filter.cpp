@@ -4,7 +4,7 @@
 #include <gtest/gtest.h>
 
 TEST(bloom_filter_test, insert_test) {
-    bloom_filter filter(5, 0.01);
+    spell_sweeper::bloom_filter filter(5, 0.01);
     filter.insert("clear");
     filter.insert("this");
     filter.insert("these");
@@ -26,7 +26,7 @@ TEST(bloom_filter_test, file_test) {
     }
     file.close();
 
-    bloom_filter filter(words.size(), 0.01);
+    spell_sweeper::bloom_filter filter(words.size(), 0.01);
     for (const auto& word : words)
         filter.insert(word);
 
