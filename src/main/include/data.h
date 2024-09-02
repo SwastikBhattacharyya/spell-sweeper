@@ -15,6 +15,15 @@ class data {
     bk_tree tree;
     bloom_filter filter;
 
+  private:
+    friend class boost::serialization::access;
+
+    template <typename Archive>
+    void serialize(Archive& archive, const unsigned int version) {
+        archive& this->tree;
+        archive& this->filter;
+    }
+
   public:
     data() = default;
     std::vector<std::string> read_dictionary(std::ifstream& file);

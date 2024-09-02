@@ -22,10 +22,10 @@ class bloom_filter {
 
     template <typename Archive>
     void serialize(Archive& archive, const unsigned int version) {
-        archive & fp_prob;
-        archive & size;
-        archive & hash_count;
-        archive & bitarray;
+        archive& this->fp_prob;
+        archive& this->size;
+        archive& this->hash_count;
+        archive& this->bitarray;
     }
 
   public:
