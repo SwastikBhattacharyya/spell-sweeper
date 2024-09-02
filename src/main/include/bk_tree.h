@@ -1,7 +1,6 @@
 #ifndef SPELL_SWEEPER_INCLUDE_BK_TREE_H
 #define SPELL_SWEEPER_INCLUDE_BK_TREE_H
 
-#include <boost/archive/text_oarchive.hpp>
 #include <boost/serialization/map.hpp>
 #include <boost/serialization/shared_ptr.hpp>
 #include <cstdint>
