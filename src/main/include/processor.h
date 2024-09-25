@@ -15,6 +15,8 @@ public:
   static std::vector<std::string> get_words(const std::string& input);
   static std::array<std::string, 3> split_word(const std::string& word);
   static std::string join_word(const std::array<std::string, 3> split_word);
+  static std::string replace_word(const std::string& new_word,
+                                  const std::string& old_word);
 };
 } // namespace spell_sweeper
 

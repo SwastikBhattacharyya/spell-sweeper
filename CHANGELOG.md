@@ -3,7 +3,16 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 ---
-## [0.2.2](https://github.com/SwastikBhattacharyya/spell-sweeper/compare/v0.2.1..0.2.2) - 2024-09-25
+## [1.0.0](https://github.com/SwastikBhattacharyya/spell-sweeper/compare/v0.2.2..1.0.0) - 2024-09-25
+
+### Features
+
+- **(app)** add function to initialize app data - ([143c690](https://github.com/SwastikBhattacharyya/spell-sweeper/commit/143c690465cf22838969572b0cc13a7176d0e154)) - Swastik Bhattacharyya
+- **(app)** add run function in app class to run spell checker - ([4054683](https://github.com/SwastikBhattacharyya/spell-sweeper/commit/4054683d0600ba723d3fef97e56cab1434792cd4)) - Swastik Bhattacharyya
+- **(processor)** add function to replace word and maintain case - ([b6601b0](https://github.com/SwastikBhattacharyya/spell-sweeper/commit/b6601b09a62aaf3470cab4ed86b28eff91113312)) - Swastik Bhattacharyya
+
+---
+## [0.2.2](https://github.com/SwastikBhattacharyya/spell-sweeper/compare/v0.2.1..v0.2.2) - 2024-09-25
 
 ### Features
 
