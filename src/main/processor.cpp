@@ -39,8 +39,9 @@ std::vector<std::string> processor::get_words(const std::string& input) {
         temp.clear();
       }
       results.push_back(std::string(1, input[i]));
-    } else
+    } else {
       temp += input[i];
+    }
   }
 
   if (!temp.empty())

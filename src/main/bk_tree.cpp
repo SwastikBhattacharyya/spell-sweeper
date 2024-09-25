@@ -44,8 +44,9 @@ int8_t bk_tree::add(const std::string_view& word) {
       current_node->next.insert(
           {distance, std::make_shared<bk_tree::node>(bk_tree::node(word))});
       return 0;
-    } else
+    } else {
       current_node = current_node->next[distance];
+    }
   }
 
   return -1;
@@ -102,14 +103,15 @@ int8_t bk_tree::remove(const std::string_view& word) {
   while (true) {
     std::uint8_t distance =
         edit_distance::get_damerau_levenshtein(word, current_node->word, 255);
-    if (distance == 0)
+    if (distance == 0) {
       break;
-    else if (current_node->next.find(distance) != current_node->next.end()) {
+    } else if (current_node->next.find(distance) != current_node->next.end()) {
       parent_node = current_node;
       index = distance;
       current_node = current_node->next[distance];
-    } else
+    } else {
       return -1;
+    }
   }
 
   parent_node->next.erase(index);

@@ -28,7 +28,7 @@ public:
 
   public:
     node() = default;
-    node(const std::string_view& word);
+    explicit node(const std::string_view& word);
   };
   std::shared_ptr<node> head;
 
@@ -46,7 +46,7 @@ private:
 
 public:
   bk_tree() = default;
-  bk_tree(std::vector<std::string> words);
+  explicit bk_tree(std::vector<std::string> words);
   int8_t add(const std::string_view& word);
   int8_t search(const std::string_view& word);
   int8_t remove(const std::string_view& word);
