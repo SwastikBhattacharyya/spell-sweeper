@@ -55,13 +55,13 @@ int8_t app::run() {
     if (!this->app_data.filter.lookup(word_lower) ||
         (this->app_data.filter.lookup(word_lower) &&
          this->app_data.tree.search(word_lower) == -1)) {
-      std::cout << word << " is spelled incorrectly" << '\n';
 
       uint8_t tolerance = 1;
       std::vector<std::string_view> suggestions =
           this->app_data.tree.get_similar_words(word_lower, tolerance);
       while (true) {
         std::cout << "\033[2J\033[1;1H";
+        std::cout << word << " is spelled incorrectly" << '\n';
         std::cout << "Suggestions: " << '\n';
         for (uint64_t i = 0; i < suggestions.size(); i++)
           std::cout << i + 1 << ": " << suggestions[i] << '\n';
@@ -79,7 +79,8 @@ int8_t app::run() {
           std::cin >> suggestion;
           suggestion = std::clamp((uint64_t)suggestion, (uint64_t)1,
                                   (uint64_t)suggestions.size());
-          split_input[i][1] = suggestions[suggestion - 1];
+          split_input[i][1] = processor::replace_word(
+              std::string(suggestions[suggestion - 1]), word);
           break;
         } else if (user_input == 2) {
           this->app_data.tree.add(word_lower);

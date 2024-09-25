@@ -1,5 +1,6 @@
 #include "include/processor.h"
 
+#include <cctype>
 #include <stdint.h>
 #include <string>
 #include <vector>
@@ -86,6 +87,28 @@ std::array<std::string, 3> processor::split_word(const std::string& word) {
 
 std::string processor::join_word(const std::array<std::string, 3> split_word) {
   std::string word = split_word[0] + split_word[1] + split_word[2];
+  return word;
+}
+
+std::string processor::replace_word(const std::string& new_word,
+                                    const std::string& old_word) {
+  uint8_t i = 0;
+  std::string word;
+  while (i < new_word.size() && i < old_word.size()) {
+    if (isalpha(new_word[i])) {
+      if (islower(old_word[i]))
+        word += tolower(new_word[i]);
+      else
+        word += toupper(new_word[i]);
+    } else {
+      word += new_word[i];
+    }
+    i++;
+  }
+
+  while (i < new_word.size())
+    word += new_word[i++];
+
   return word;
 }
 } // namespace spell_sweeper
