@@ -1,3 +1,4 @@
+#include "include/app.h"
 #include <iostream>
 
 #ifdef UNIT_TESTS
@@ -12,6 +13,8 @@ int MAIN(int argc, char** argv) {
     return EXIT_FAILURE;
   }
 
-  std::cout << "Spell Sweeper" << '\n';
+  spell_sweeper::app app;
+  app.init();
+
   return 0;
 }
