@@ -1,4 +1,5 @@
 #include "include/app.h"
+#include <cstdlib>
 #include <iostream>
 
 #ifdef UNIT_TESTS
@@ -13,8 +14,16 @@ int MAIN(int argc, char** argv) {
     return EXIT_FAILURE;
   }
 
-  spell_sweeper::app app;
-  app.init();
+  spell_sweeper::app app(argv[1], argv[2]);
+  if (app.init() == -1) {
+    std::cout << "Failed to initialize app" << '\n';
+    return EXIT_FAILURE;
+  }
 
-  return 0;
+  if (app.run() == -1) {
+    std::cout << "Failed to run app" << '\n';
+    return EXIT_FAILURE;
+  }
+
+  return EXIT_SUCCESS;
 }
