@@ -6,14 +6,14 @@
 
 namespace spell_sweeper {
 class edit_distance {
-  public:
-    static std::uint8_t get_damerau_levenshtein(const std::string_view word_a,
-                                                const std::string_view word_b,
-                                                std::uint8_t alphabet_length);
-    static double get_jaro(const std::string_view word_a,
-                           const std::string_view word_b);
-    static double get_jaro_winkler(const std::string_view word_a,
-                                   const std::string_view word_b);
+public:
+  static std::uint8_t get_damerau_levenshtein(const std::string_view word_a,
+                                              const std::string_view word_b,
+                                              std::uint8_t alphabet_length);
+  static double get_jaro(const std::string_view word_a,
+                         const std::string_view word_b);
+  static double get_jaro_winkler(const std::string_view word_a,
+                                 const std::string_view word_b);
 };
 } // namespace spell_sweeper
 
