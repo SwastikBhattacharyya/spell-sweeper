@@ -3,7 +3,26 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 ---
-## [0.2.0](https://github.com/SwastikBhattacharyya/spell-sweeper/compare/v0.1.2..0.2.0) - 2024-08-27
+## [0.2.2](https://github.com/SwastikBhattacharyya/spell-sweeper/compare/v0.2.1..0.2.2) - 2024-09-25
+
+### Features
+
+- **(bloom)** add BloomFilter class - ([1ce48d7](https://github.com/SwastikBhattacharyya/spell-sweeper/commit/1ce48d762d4ce4e902b83e0b5e515b45e3e4d025)) - TechnoFlask
+- **(bloom-filter)** add serialization in bloom filter - ([b9652c2](https://github.com/SwastikBhattacharyya/spell-sweeper/commit/b9652c28bd076d7cdb0cee7ee76b9e7593586948)) - Swastik Bhattacharyya
+- **(data)** add serialization in data class - ([f535167](https://github.com/SwastikBhattacharyya/spell-sweeper/commit/f53516728f3be7975c32c7f49763212b5c17d1c4)) - Swastik Bhattacharyya
+- **(hash)** Add murmur3 hashing - ([99d74d2](https://github.com/SwastikBhattacharyya/spell-sweeper/commit/99d74d25633da1ce3534867a234fc9acebd712a8)) - TechnoFlask
+- **(processor)** add processor class - ([18eb9ec](https://github.com/SwastikBhattacharyya/spell-sweeper/commit/18eb9ec3f9ca60edcc85990b4ba90a98e83ac186)) - Swastik Bhattacharyya
+- **(processor)** add function to join word and entire input - ([8835ac8](https://github.com/SwastikBhattacharyya/spell-sweeper/commit/8835ac8da6923b5145778f27cfe1d2d0d346dca3)) - Swastik Bhattacharyya
+
+---
+## [0.2.1](https://github.com/SwastikBhattacharyya/spell-sweeper/compare/v0.2.0..v0.2.1) - 2024-08-29
+
+### Features
+
+- **(bk-tree)** add serialization support for bk tree - ([6850724](https://github.com/SwastikBhattacharyya/spell-sweeper/commit/6850724de57e6d2221f8cf45d48f59ba193d84c1)) - Swastik Bhattacharyya
+
+---
+## [0.2.0](https://github.com/SwastikBhattacharyya/spell-sweeper/compare/v0.1.2..v0.2.0) - 2024-08-27
 
 ### Features
 
